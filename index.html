@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>¿Y si tú fueras su docente? | Instituto SISE</title>
+<meta content="Caso interactivo de toma de decisiones docentes del Instituto SISE." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --sise-red: #FF0E49;
+      --sise-red-dark: #D70A3E;
+      --sise-dark: #241F21;
+      --sise-dark-2: #2D2426;
+      --sise-dark-3: #3A3437;
+      --sise-white: #FFFFFF;
+      --sise-paper: #F4F1F2;
+      --sise-soft: #FFF2F6;
+      --sise-line: #E5DEE1;
+      --sise-text: #171416;
+      --sise-muted: #7E7478;
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow-soft: 0 18px 48px rgba(0,0,0,.15);
+      --shadow-card: 0 10px 28px rgba(0,0,0,.08);
+      --maxw: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255,14,73,.10), transparent 28%),
+        linear-gradient(180deg, #fbf8f9 0%, #f4f1f2 100%);
+      color: var(--sise-text);
+    }
+
+    img { max-width: 100%; display: block; }
+    button { font: inherit; }
+
+    .page-wrap {
+      width: min(var(--maxw), calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin: 20px auto 26px;
+      border-radius: 28px;
+      background: linear-gradient(120deg, var(--sise-dark) 0%, var(--sise-dark-2) 52%, #621b34 100%);
+      color: var(--sise-white);
+      box-shadow: var(--shadow-soft);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -90px auto;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 240px;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0 18%, rgba(255,14,73,.94) 18% 60%, transparent 60% 72%, rgba(255,14,73,.85) 72% 100%);
+      opacity: .9;
+      clip-path: polygon(32% 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 30px 34px 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: start;
+    }
+    .logo-box {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      padding: 10px 14px;
+      width: fit-content;
+      backdrop-filter: blur(4px);
+    }
+    .logo-box img {
+      width: 136px;
+      height: auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-top: 16px;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      margin: 14px 0 8px;
+      font-size: clamp(2.6rem, 5.2vw, 5.1rem);
+      line-height: .92;
+      font-weight: 900;
+      text-transform: uppercase;
+      max-width: 11ch;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 560px;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      line-height: 1.28;
+      color: rgba(255,255,255,.92);
+    }
+    .hero-meta {
+      display: grid;
+      gap: 12px;
+      justify-items: end;
+      text-align: right;
+      padding-top: 4px;
+    }
+    .meta-chip,
+    .meta-pill {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 18px;
+      padding: 14px 16px;
+      min-width: 160px;
+    }
+    .meta-label {
+      color: rgba(255,255,255,.75);
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .meta-value {
+      font-weight: 900;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .route-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 0 0 22px;
+    }
+    .route-item {
+      background: #fff;
+      border: 1px solid rgba(36,31,33,.10);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .route-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--sise-red);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 1.05rem;
+      flex: 0 0 auto;
+    }
+    .route-item strong {
+      display: block;
+      font-size: 1.02rem;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .route-item span {
+      display: block;
+      color: var(--sise-muted);
+      font-size: .95rem;
+      line-height: 1.1;
+    }
+
+    .slider-card {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(36,31,33,.08);
+    }
+    .slider-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--sise-line);
+      background: linear-gradient(180deg, #fff 0%, #fcf9fa 100%);
+    }
+    .eyebrow {
+      color: var(--sise-red);
+      font-size: .95rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 4px;
+    }
+    .slider-title {
+      margin: 0;
+      font-size: clamp(1.55rem, 2.8vw, 2.25rem);
+      line-height: .96;
+      text-transform: uppercase;
+    }
+    .slider-subtitle {
+      margin: 4px 0 0;
+      color: var(--sise-muted);
+      font-size: 1.02rem;
+    }
+    .slider-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      appearance: none;
+      border: 0;
+      background: var(--sise-dark);
+      color: #fff;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 1.4rem;
+      font-weight: 900;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .nav-btn:hover,
+    .nav-btn:focus-visible {
+      background: var(--sise-red);
+      transform: translateY(-1px);
+      outline: none;
+    }
+    .slide-indicator {
+      background: var(--sise-soft);
+      color: var(--sise-dark);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      font-size: .98rem;
+    }
+
+    .slider-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .95fr);
+      gap: 0;
+      min-height: 590px;
+    }
+    .slide-visual {
+      position: relative;
+      min-height: 400px;
+      background: linear-gradient(180deg, #f6f2f3 0%, #ece8ea 100%);
+      border-right: 1px solid var(--sise-line);
+    }
+    .slide-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .slide-tag {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(36,31,33,.84);
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: .92rem;
+      letter-spacing: .08em;
+      backdrop-filter: blur(6px);
+    }
+    .slide-panel {
+      padding: 26px 26px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      background: #fff;
+    }
+    .slide-week {
+      color: var(--sise-red);
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: .96rem;
+      margin-bottom: 10px;
+    }
+    .slide-panel h3 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3.1vw, 2.55rem);
+      line-height: .95;
+      text-transform: uppercase;
+    }
+    .slide-panel p {
+      margin: 0;
+      font-size: 1.16rem;
+      line-height: 1.28;
+      color: #2a2628;
+    }
+    .quote-box {
+      position: relative;
+      padding: 18px 18px 18px 20px;
+      border-radius: 18px;
+      background: var(--sise-soft);
+      border-left: 6px solid var(--sise-red);
+    }
+    .quote-box small {
+      display: block;
+      color: var(--sise-muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 800;
+      margin-bottom: 6px;
+      font-size: .84rem;
+    }
+    .quote-box strong {
+      display: block;
+      font-size: 1.34rem;
+      line-height: 1.05;
+      color: var(--sise-dark);
+    }
+    .focus-box {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--sise-dark);
+      color: #fff;
+    }
+    .focus-box small {
+      color: rgba(255,255,255,.7);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+      font-size: .8rem;
+    }
+    .focus-box ul {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 8px;
+      font-size: 1.04rem;
+      line-height: 1.15;
+    }
+    .focus-box li::marker { color: var(--sise-red); }
+
+    .slider-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 22px 22px;
+      border-top: 1px solid var(--sise-line);
+      background: #fff;
+      flex-wrap: wrap;
+    }
+    .dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 0;
+      background: #d7cfd2;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .dot.active {
+      background: var(--sise-red);
+      transform: scale(1.15);
+    }
+    .hint {
+      color: var(--sise-muted);
+      font-size: 1rem;
+    }
+
+    .forum-block {
+      margin: 26px 0 34px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+    }
+    .forum-main,
+    .forum-side {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(36,31,33,.08);
+      overflow: hidden;
+    }
+    .forum-head {
+      padding: 18px 20px;
+      background: linear-gradient(180deg, var(--sise-red) 0%, var(--sise-red-dark) 100%);
+      color: #fff;
+    }
+    .forum-head .mini {
+      font-size: .86rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .92;
+      margin-bottom: 6px;
+    }
+    .forum-head h2 {
+      margin: 0;
+      font-size: clamp(1.9rem, 3.8vw, 2.85rem);
+      line-height: .95;
+      text-transform: uppercase;
+    }
+    .forum-content {
+      padding: 22px 22px 24px;
+      display: grid;
+      gap: 18px;
+    }
+    .forum-content p {
+      margin: 0;
+      font-size: 1.16rem;
+      line-height: 1.28;
+    }
+    .question-list {
+      display: grid;
+      gap: 12px;
+    }
+    .question-item {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 14px;
+      border-radius: 18px;
+      background: #faf8f8;
+      border: 1px solid #eee7ea;
+    }
+    .q-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--sise-dark);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+    .question-item strong {
+      display: block;
+      font-size: 1.2rem;
+      line-height: 1.04;
+      margin-bottom: 4px;
+    }
+    .question-item span {
+      display: block;
+      color: var(--sise-muted);
+      font-size: 1rem;
+      line-height: 1.15;
+    }
+
+    .teacher-tip {
+      border-left: 6px solid var(--sise-red);
+      background: var(--sise-soft);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+    .teacher-tip strong {
+      display: block;
+      font-size: 1.16rem;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .forum-side .forum-content {
+      gap: 16px;
+    }
+    .forum-side .forum-head {
+      background: linear-gradient(180deg, var(--sise-dark) 0%, var(--sise-dark-2) 100%);
+    }
+    .step-card {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 18px;
+      background: #faf8f8;
+      border: 1px solid #ece5e8;
+    }
+    .step-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: var(--sise-soft);
+      border: 1px solid #ffd2de;
+      display: grid;
+      place-items: center;
+      color: var(--sise-red);
+      font-size: 1.45rem;
+      font-weight: 900;
+    }
+    .step-card strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 1.12rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .step-card span {
+      display: block;
+      color: var(--sise-muted);
+      font-size: 1rem;
+      line-height: 1.12;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+    .meta-grid .mini-box {
+      padding: 14px;
+      border-radius: 16px;
+      background: #faf8f8;
+      border: 1px solid #ece5e8;
+    }
+    .mini-box small {
+      display: block;
+      text-transform: uppercase;
+      color: var(--sise-muted);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+    .mini-box strong {
+      font-size: 1.12rem;
+      line-height: 1;
+    }
+
+    .footer-note {
+      margin: 0 0 28px;
+      text-align: center;
+      color: var(--sise-muted);
+      font-size: 1rem;
+    }
+    .footer-note strong { color: var(--sise-dark); }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .slider-body,
+      .forum-block {
+        grid-template-columns: 1fr;
+      }
+      .hero::after { opacity: .55; }
+      .hero-meta {
+        justify-items: start;
+        text-align: left;
+      }
+      .route-bar { grid-template-columns: repeat(2, 1fr); }
+      .slider-top,
+      .slider-footer { align-items: flex-start; }
+      .slide-visual { border-right: 0; border-bottom: 1px solid var(--sise-line); }
+      .forum-block { margin-top: 22px; }
+    }
+
+    @media (max-width: 640px) {
+      .page-wrap { width: min(var(--maxw), calc(100% - 16px)); }
+      .hero { margin-top: 8px; border-radius: 22px; }
+      .hero-inner { padding: 20px 18px 22px; }
+      .slider-top,
+      .slide-panel,
+      .slider-footer,
+      .forum-content,
+      .forum-head { padding-left: 16px; padding-right: 16px; }
+      .route-bar { grid-template-columns: 1fr; }
+      .route-item { padding: 10px 12px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .question-item,
+      .step-card { grid-template-columns: 1fr; }
+      .q-num,
+      .step-icon { width: 42px; height: 42px; border-radius: 12px; }
+      .slide-tag { left: 12px; top: 12px; }
+      .slide-panel p,
+      .forum-content p { font-size: 1.08rem; }
+    }
+  
+/* Compact layout, optimized for Canvas iframe */
+body{font-family:Arial,sans-serif;font-size:15px;background:#f5f3f4;line-height:1.45}
+.page-wrap{width:min(960px,calc(100% - 24px));}
+.hero{margin:12px auto 14px;border-radius:14px;box-shadow:none;}
+.hero::before,.hero::after{display:none}
+.hero-inner{display:block;padding:18px 22px;border-right:7px solid #FF0E49}
+.logo-box{display:block;background:none;border:0;border-radius:0;padding:0;backdrop-filter:none;box-shadow:none}
+.logo-box img{width:108px;height:auto}
+.hero-badge{margin-top:11px;padding:0;border:0;background:none;font-size:12px;letter-spacing:.08em}
+.hero h1{font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;font-size:clamp(25px,4vw,38px);line-height:1.05;max-width:none;margin:5px 0 6px;text-transform:none}
+.hero p{font-size:14px;line-height:1.4;max-width:none}
+.slider-card{border-radius:14px;box-shadow:none}
+.slider-top{padding:11px 16px;align-items:center;gap:10px}
+.eyebrow{display:none}.slider-title{font-size:19px;line-height:1.2;text-transform:none}.slider-subtitle{font-size:13px;margin:3px 0 0}
+.slider-actions{gap:6px}.nav-btn{width:35px;height:35px;border-radius:8px;font-size:22px}.slide-indicator{font-size:12px;padding:6px 9px;white-space:nowrap}
+.slider-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:0;align-items:start}
+.slide-visual{min-height:0;aspect-ratio:4/3;align-self:start;border:0}.slide-visual img{width:100%;height:100%;object-fit:contain}.slide-tag{top:10px;left:10px;font-size:12px;padding:5px 8px}
+.slide-panel{padding:15px 18px;gap:12px;justify-content:flex-start;align-self:start}.slide-week{font-size:12px;margin-bottom:5px}.slide-panel h3{font-size:23px;line-height:1.1;text-transform:none;margin:0 0 7px}.slide-panel p{font-size:14px;line-height:1.45}.quote-box{padding:10px 12px;border-radius:8px;border-left-width:4px}.quote-box small{font-size:12px;margin-bottom:4px}.quote-box strong{font-size:15px;line-height:1.35}.focus-box{padding:11px 13px;border-radius:8px;gap:5px}.focus-box small{font-size:12px}.focus-box ul{font-size:13px;line-height:1.35;gap:4px;padding-left:17px}
+.slider-footer{padding:10px 16px;gap:8px;align-items:center}.dots{gap:7px}.dot{width:12px;height:12px}.hint{font-size:12px}
+.forum-block{display:block;margin:14px 0 12px}.forum-main{border-radius:12px;box-shadow:none}.forum-head{padding:11px 16px;background:#C80A3A}.forum-head h2{font-size:20px;line-height:1.2;text-transform:none}.forum-content{padding:12px 17px;gap:8px}.forum-content ol{margin:0;padding-left:21px;font-size:14px;font-weight:600;line-height:1.45}.forum-content li+li{margin-top:6px}.forum-content p{font-size:13px;line-height:1.45}.forum-content .note{color:#62595e;font-size:12px}.footer-note{font-size:12px;margin:0 0 12px}
+@media(max-width:680px){.page-wrap{width:calc(100% - 16px)}.hero-inner{padding:14px 16px}.slider-body{grid-template-columns:1fr}.slide-visual{width:100%;max-height:340px;aspect-ratio:4/3}.slider-top{flex-wrap:wrap}.slide-panel{padding:13px 15px}.slider-footer{align-items:center}.hint{flex:1;min-width:140px}}
+
+.nav-btn:disabled,.nav-btn:disabled:hover{background:#ded9db;color:#82787d;cursor:default;transform:none;opacity:.85}
+.slider-body{grid-template-rows:1fr;align-items:stretch}
+.slide-visual{align-self:stretch;aspect-ratio:auto;min-height:0;position:relative}
+.slide-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.slide-panel{align-self:stretch;min-height:0}
+@media(max-width:680px){.slider-body{grid-template-rows:auto 1fr}.slide-visual{aspect-ratio:4/3;max-height:340px}.slide-panel{align-self:stretch}}
+
+[hidden]{display:none!important}.decision-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{display:flex;align-items:flex-start;gap:9px;border:1px solid #d8d1d4;border-radius:9px;padding:10px 12px;font:inherit;font-size:14px;line-height:1.35;color:#241f21;background:white;text-align:left;cursor:pointer}.choice[aria-pressed=true]{border-color:#C80A3A;background:#fff1f5;box-shadow:inset 0 0 0 1px #C80A3A}.choice b{flex:none;color:#C80A3A}.choice:focus-visible,.continue:focus-visible{outline:3px solid #241f21;outline-offset:2px}.decision-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.continue{border:0;background:#C80A3A;color:white;font:inherit;font-size:14px;font-weight:700;padding:9px 15px;border-radius:8px;cursor:pointer}.continue:disabled,.dot:disabled{opacity:.4;cursor:not-allowed}.summary-line{padding:8px 0;border-bottom:1px solid #eee7ea;font-size:14px}.summary-line strong{display:block;color:#C80A3A}.slide-panel{justify-content:flex-start}.decision-prompt{font-weight:600}.slide-panel .quote-box{margin-top:0}@media(max-width:680px){.decision-options{grid-template-columns:1fr}}
+
+/* Panel lateral: relato y decisiones en una sola vista */
+.slider-body{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:stretch}
+.slide-visual{background:#e8e5e6;align-self:stretch;overflow:hidden;touch-action:pan-y}
+.slide-visual img{object-fit:contain;object-position:center}
+.slide-panel{padding:14px 18px;gap:9px;min-width:0;justify-content:flex-start}
+.slide-panel h3{font-size:22px;margin-bottom:5px}.slide-panel p{font-size:15px;line-height:1.32}.slide-week{font-size:13px}
+.quote-box{padding:7px 10px}.quote-box small{font-size:13px;margin-bottom:2px}.quote-box strong{font-size:15px}
+.decision-inline{border-top:1px solid #e5dee1;padding-top:9px;margin-top:1px}
+.decision-inline h4{font-size:18px;line-height:1.15;margin:0 0 5px;color:#241f21}
+#decisionContent,[data-field="decisionContent"]{display:grid;gap:7px}.decision-options{grid-template-columns:1fr;gap:5px}
+.choice{font-size:14px;line-height:1.22;padding:8px 10px;min-height:35px;border-radius:7px;gap:8px}.choice b{color:#635b60}.choice[aria-pressed=true] b{color:#C80A3A}
+.decision-bottom{gap:6px;justify-content:space-between}.decision-bottom p{font-size:13px;color:#62595e;flex:1;min-width:110px}.continue{font-size:14px;padding:8px 12px}.hint,.slide-indicator,.hero-badge,.slide-tag,.footer-note{font-size:13px}
+.summary-line{font-size:15px;line-height:1.35;padding:7px 0}.summary-line strong{color:#241f21;font-size:14px;margin-bottom:2px}.reflection{background:#fff2f6;border-left:4px solid #ff0e49;border-radius:7px;padding:12px 14px;display:grid;gap:6px}.reflection h3{font-size:17px;margin:0}.reflection p{font-size:15px;line-height:1.4}.summary-actions{display:flex;justify-content:flex-end}.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.summary-grid .summary-line{background:#f7f4f4;padding:10px;border:0;border-radius:8px}
+@media(max-width:680px){.slider-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}.slide-visual{aspect-ratio:4/3;max-height:270px}.slide-panel{padding:13px}.summary-grid{grid-template-columns:1fr}.slide-panel h3{font-size:21px}}
+/* Adaptacion a ilustraciones verticales 3:4 */
+@media(min-width:681px){.slider-body{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr)}.slide-visual img{object-fit:cover}.slide-panel{justify-content:center}}
+@media(max-width:680px){.slide-visual{aspect-ratio:3/4;max-height:none;width:100%}.slide-visual img{object-fit:cover}}
+</style>
+</head>
+<body>
+<main class="page-wrap">
+<section aria-labelledby="hero-title" class="hero">
+<div class="hero-inner">
+<div>
+<div class="logo-box">
+<img alt="Logotipo SISE" src="assets/logo-sise.png"/>
+</div>
+<div class="hero-badge">Módulo 1 · Tema 1</div>
+<h1 id="hero-title">¿Y si tú fueras su docente?</h1>
+<p>Conoce la historia de Diego y decide cómo actuarías desde tu experiencia.</p>
+</div>
+</div>
+</section>
+<section aria-label="Caso deslizable" class="slider-card">
+<div class="slider-top">
+<div>
+<div class="eyebrow">Recurso interactivo</div>
+<h2 class="slider-title">Recorre el caso y observa las señales</h2>
+<p class="slider-subtitle">Avanza por las cuatro escenas y decide cómo actuarías.</p>
+</div>
+<div class="slider-actions">
+<span aria-live="polite" class="slide-indicator" id="slideIndicator">Escena 1 de 4</span>
+<button aria-label="Escena anterior" class="nav-btn" disabled="" id="prevBtn">‹</button>
+<button aria-label="Escena siguiente" class="nav-btn" id="nextBtn">›</button>
+</div>
+</div>
+<div class="slider-body">
+<div class="slide-visual">
+
+<img alt="Diego participa con entusiasmo en clase al inicio del ciclo." id="slideImage" src="assets/escena-01.webp"/>
+</div>
+<div class="slide-panel">
+<div>
+<div class="slide-week" id="slideWeek">Semana 1</div>
+<h3 id="slideTitle">Todo comienza bien</h3>
+<p id="slideText">
+              Diego inicia el curso con entusiasmo. Participa, toma apuntes y se involucra activamente en clase.
+              Tiene expectativas positivas y se siente capaz de avanzar durante el ciclo.
+            </p>
+</div>
+<div class="quote-box">
+<small>Lo que podría estar pensando</small>
+<strong id="slideQuote">“Este ciclo me irá mucho mejor.”</strong>
+</div>
+<div class="decision-inline" id="decisiones"><h4 id="decisionTitle">Conoce el caso</h4><div id="decisionContent"></div></div></div>
+</div>
+<div class="slider-footer">
+<div aria-label="Seleccionar escena" class="dots" id="dots"></div>
+<div class="hint">Puedes regresar y revisar tus decisiones antes de continuar.</div>
+</div>
+</section>
+<section class="forum-block" hidden="" id="summary"><article class="forum-main"><header class="forum-head"><h2>Así iniciarías el acompañamiento</h2></header><div class="forum-content" id="summaryContent"></div></article></section>
+<p class="footer-note">Instituto SISE – Grupo EducaD</p>
+</main>
+<script>
+    const slides = [
+      {
+        tag: 'Escena 1',
+        week: 'Semana 1',
+        title: 'Todo comienza bien',
+        text: 'Diego inicia el curso con entusiasmo. Participa, toma apuntes y se involucra activamente en clase. Tiene expectativas positivas y se siente capaz de avanzar durante el ciclo.',
+        quote: '“Este ciclo me irá mucho mejor.”',
+        focus: [
+          'Participación sostenida.',
+          'Compromiso visible con la clase.',
+          'Disposición positiva hacia el aprendizaje.'
+        ],
+        img: 'assets/escena-01.webp',
+        alt: 'Diego participa con entusiasmo en clase al inicio del ciclo.'
+      },
+      {
+        tag: 'Escena 2',
+        week: 'Semana 2',
+        title: 'Algo empieza a cambiar',
+        text: 'Los horarios laborales de Diego cambian. La carga empieza a pasar factura: estudia de noche, se siente cansado y deja una actividad pendiente mientras intenta mantenerse al día.',
+        quote: '“Mañana intentaré ponerme al día.”',
+        focus: [
+          'Cansancio y presión por el tiempo.',
+          'Primera actividad pendiente.',
+          'Esfuerzo por sostener el ritmo.'
+        ],
+        img: 'assets/escena-02.webp',
+        alt: 'Diego estudia de noche, cansado, mientras intenta cumplir con sus actividades.'
+      },
+      {
+        tag: 'Escena 3',
+        week: 'Semana 3',
+        title: 'La distancia aumenta',
+        text: 'Las tareas pendientes se acumulan, su participación disminuye y la frustración empieza a hacerse visible. Diego se siente cada vez más lejos del curso y no pide ayuda.',
+        quote: '“Ya estoy demasiado atrasado. No sé si podré continuar.”',
+        focus: [
+          'Disminución de la participación.',
+          'Acumulación de pendientes.',
+          'Frustración y posible desconexión.'
+        ],
+        img: 'assets/escena-03.webp',
+        alt: 'Diego aparece desmotivado y frustrado frente a varias tareas acumuladas.'
+      },
+      {
+        tag: 'Escena 4',
+        week: 'La decisión docente',
+        title: 'Una intervención pendiente',
+        text: 'El docente revisa el progreso y detecta señales claras: menor participación, actividades pendientes y riesgo de desconexión. Todavía no conoce los motivos, pero sí debe decidir si intervenir y cómo hacerlo.',
+        quote: '“¿Espero a que me escriba o tomo la iniciativa para acompañarlo?”',
+        focus: [
+          'Observación de señales objetivas.',
+          'Necesidad de una decisión oportuna.',
+          'Posibilidad de un primer contacto preventivo.'
+        ],
+        img: 'assets/escena-04.webp',
+        alt: 'Una docente revisa el progreso de Diego y evalúa si debe contactarlo.'
+      }
+    ];
+
+    // Contenido editable: decisiones y alternativas.
+    slides[0].text='Diego inicia el curso con entusiasmo. Participa, toma apuntes y entrega sus actividades a tiempo.';
+    slides[1].text='Un cambio en sus horarios laborales lo obliga a estudiar hasta tarde. Tiene una actividad pendiente y participa menos. Como docente, aún desconoces el motivo.';
+    slides[2].text='Diego acumula actividades pendientes y participa cada vez menos. Se siente frustrado, pero todavía no ha solicitado ayuda.';
+    slides[3].text='Al revisar su progreso en Canvas, confirmas que ha disminuido su participación y tiene entregas pendientes. Ahora debes decidir cómo iniciar el contacto.';
+    const decisions=[null,
+      {title:'Decisión 1 · ¿Cuándo intervenir?',prompt:'Ante los primeros cambios, ¿qué harías?',options:['Esperaría unos días para ver si se pone al día por su cuenta.','Le enviaría un recordatorio de la actividad pendiente y del plazo.','Le escribiría individualmente para saber cómo está avanzando.','Aprovecharía la próxima clase para conversar con él en privado.'],reflect:['¿Qué señales te indicarían que ya no conviene esperar?','¿Qué podrías conocer del estudiante además del estado de su entrega?','¿Cómo decidirías el momento y el medio de ese contacto?','¿Qué harías si no asiste a la próxima sesión?']},
+      {title:'Decisión 2 · ¿Cómo interpretar la situación?',prompt:'Con lo que sabes como docente, ¿qué pensarías primero?',options:['Tal vez le está costando organizar sus horarios y responsabilidades.','Puede haber una dificultad que todavía no conozco; tendría que preguntarle.','Quizá ha perdido interés en el curso o en las actividades.','Revisaría sus entregas y participación antes de sacar conclusiones.'],reflect:['¿Qué evidencia te permitiría confirmar esa impresión?','¿Qué información necesitarías para comprender su situación?','¿Qué otras explicaciones podrían existir para esas mismas señales?','¿Qué información no podrías obtener únicamente de Canvas?']},
+      {title:'Decisión 3 · ¿Cómo iniciarías la comunicación?',prompt:'¿Qué mensaje enviarías a Diego?',options:['Hola, Diego. Vi que tienes tareas pendientes. Revisa los plazos para que puedas ponerte al día.','Hola, Diego. He notado que participas menos y tienes entregas pendientes. ¿Cómo te está yendo con el curso?','Hola, Diego. Me preocupa tu avance. Te sugiero organizar tus tiempos y empezar por la actividad más atrasada.','Hola, Diego. ¿Podemos conversar unos minutos después de la próxima clase para revisar tus actividades?'],reflect:['¿Qué respuesta podría generar ese recordatorio?','¿Qué harías con la información que Diego decida compartir?','¿Cómo comprobarías que esa orientación responde a su dificultad?','¿Cómo facilitarías el diálogo si Diego no puede quedarse después de clase?']}
+    ];
+    const $=id=>document.getElementById(id);
+    let current=0,answers=[null,null,null,null],finished=false;
+    const canNext=()=>current===0||answers[current]!==null;
+    const accessible=i=>i<=1||answers.slice(1,i).every(a=>a!==null);
+    const complete=()=>answers.slice(1).every(a=>a!==null);
+    function go(i){if(i<0||i>3||!accessible(i))return;current=i;render();}
+    function showSummary(){if(!complete())return;finished=true;renderSummary();$('summary').scrollIntoView({behavior:'smooth',block:'nearest'});}
+    function renderSummary(){
+      $('summary').hidden=!finished;if(!finished)return;
+      const target=$('summaryContent');target.replaceChildren();
+      const grid=document.createElement('div');grid.className='summary-grid';
+      for(let i=1;i<4;i++){const line=document.createElement('div');line.className='summary-line';const label=document.createElement('strong');label.textContent=decisions[i].title;line.append(label,document.createTextNode(decisions[i].options[answers[i]]));grid.append(line);}target.append(grid);
+      const box=document.createElement('div');box.className='reflection';const h=document.createElement('h3');h.textContent='Una mirada a tu recorrido';box.append(h);
+      const p=document.createElement('p');p.textContent='Tus elecciones reflejan cómo abordarías el momento de intervenir, la interpretación de las señales y el primer contacto. Considera las tres decisiones como parte de una misma intervención. '+decisions[1].reflect[answers[1]]+' '+decisions[2].reflect[answers[2]]+' '+decisions[3].reflect[answers[3]];box.append(p);
+      const q=document.createElement('p');q.textContent='En el siguiente recurso descubrirás criterios de acompañamiento pedagógico. Al terminar, vuelve mentalmente a estas decisiones: ¿cuáles mantendrías y cuáles ajustarías?';box.append(q);target.append(box);
+      const actions=document.createElement('div');actions.className='summary-actions';const b=document.createElement('button');b.className='continue';b.textContent='Revisar mis decisiones';b.onclick=()=>{go(1);document.querySelector('.slider-card').scrollIntoView({behavior:'smooth'});};actions.append(b);target.append(actions);
+    }
+    function fillPanel(panel,index,interactive){
+      const slide=slides[index],d=decisions[index],get=id=>panel.querySelector(interactive?'#'+id:'[data-field="'+id+'"]');
+      for(const [id,v] of Object.entries({slideWeek:slide.week,slideTitle:slide.title,slideText:slide.text,slideQuote:slide.quote}))get(id).textContent=v;
+      get('decisionTitle').textContent=d?d.title:'Antes de decidir';const content=get('decisionContent');content.replaceChildren();
+      const p=document.createElement('p');p.className='decision-prompt';p.textContent=d?d.prompt:'Observa cómo comienza la historia. En las siguientes escenas elegirás cómo actuarías desde tu experiencia.';content.append(p);
+      if(d){const opts=document.createElement('div');opts.className='decision-options';d.options.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.className='choice';b.setAttribute('aria-pressed',String(answers[index]===i));const letter=document.createElement('b');letter.textContent=String.fromCharCode(65+i)+'.';b.append(letter,document.createTextNode(o));if(interactive)b.onclick=()=>{answers[index]=i;render();content.querySelectorAll('.choice')[i].focus({preventScroll:true});};opts.append(b);});content.append(opts);}
+      const bottom=document.createElement('div');bottom.className='decision-bottom';const note=document.createElement('p');note.textContent=d?(answers[index]!==null?'Decisión registrada.':'Elige lo que harías en realidad.'):'Continúa cuando estés listo.';const b=document.createElement('button');b.className='continue';b.type='button';b.disabled=index!==0&&answers[index]===null;b.textContent=index===3?'Ver mis decisiones':'Continuar →';if(interactive)b.onclick=()=>index===3?showSummary():go(index+1);bottom.append(note,b);content.append(bottom);
+    }
+    function render(){const slide=slides[current];$('slideImage').src=slide.img;$('slideImage').alt=slide.alt;$('slideIndicator').textContent=`Escena ${current+1} de 4`;$('prevBtn').disabled=current===0;$('nextBtn').disabled=current===3||!canNext();$('dots').replaceChildren();slides.forEach((_,i)=>{const b=document.createElement('button');b.className='dot'+(i===current?' active':'');b.setAttribute('aria-label',`Ir a la escena ${i+1}`);b.setAttribute('aria-current',i===current?'true':'false');b.disabled=!accessible(i);b.onclick=()=>go(i);$('dots').append(b);});fillPanel(document.querySelector('.slide-panel'),current,true);renderSummary();}
+    $('prevBtn').onclick=()=>go(current-1);$('nextBtn').onclick=()=>{if(canNext())go(current+1);};document.addEventListener('keydown',e=>{if(e.target.closest('button,input,textarea,select'))return;if(e.key==='ArrowLeft')go(current-1);if(e.key==='ArrowRight'&&canNext())go(current+1);});let x=null;const visual=document.querySelector('.slide-visual');visual.addEventListener('touchstart',e=>x=e.changedTouches[0].clientX,{passive:true});visual.addEventListener('touchend',e=>{if(x===null)return;const dx=e.changedTouches[0].clientX-x;x=null;if(dx>45)go(current-1);else if(dx< -45&&canNext())go(current+1);},{passive:true});
+    function stabilizeHeight(){const panel=document.querySelector('.slide-panel');const body=document.querySelector('.slider-body');panel.style.height='auto';panel.style.minHeight='0px';const probe=panel.cloneNode(true);probe.querySelectorAll('[id]').forEach(el=>{el.dataset.field=el.id;el.removeAttribute('id');});probe.setAttribute('aria-hidden','true');Object.assign(probe.style,{position:'absolute',visibility:'hidden',pointerEvents:'none',width:panel.getBoundingClientRect().width+'px',height:'auto',minHeight:'0',left:'0',top:'0'});body.append(probe);let max=0;for(let i=0;i<4;i++){fillPanel(probe,i,false);max=Math.max(max,probe.getBoundingClientRect().height);}probe.remove();if(!matchMedia('(max-width:680px)').matches)max=Math.max(max,visual.getBoundingClientRect().width*4/3);panel.style.height=(Math.ceil(max)+2)+'px';panel.style.minHeight=panel.style.height;}
+    render();stabilizeHeight();let lastWidth=0;new ResizeObserver(entries=>{const w=entries[0].contentRect.width;if(Math.abs(w-lastWidth)>.5){lastWidth=w;stabilizeHeight();}}).observe(document.querySelector('.slider-card'));if(document.fonts)document.fonts.ready.then(stabilizeHeight);
+</script>
+</body>
+</html>
